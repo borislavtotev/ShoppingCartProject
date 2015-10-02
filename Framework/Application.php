@@ -1,6 +1,7 @@
 <?php
 namespace SoftUni;
 
+
 class Application
 {
     private $controllerName;
@@ -13,7 +14,7 @@ class Application
 
     public function start()
     {
-        Router::readAllRoutes();
+        \Softuni\Router::readAllRoutes();
 
 //        $uri = Router::make_uri();
 //        echo "oppaaa";

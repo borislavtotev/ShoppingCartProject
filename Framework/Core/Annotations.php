@@ -51,7 +51,7 @@ class Annotations
         }
     }
 
-    private function getDirContents($dir, &$results = array()){
+    public static function getDirContents($dir, &$results = array()){
         $files = scandir($dir);
 
         foreach($files as $key => $value){

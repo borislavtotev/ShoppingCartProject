@@ -2,7 +2,6 @@
 
 namespace SoftUni;
 
-
 class Router
 {
     private static $uri;
@@ -11,8 +10,6 @@ class Router
     public static function readAllRoutes()
     {
         $currentDir = $_SERVER['DOCUMENT_ROOT'];
-        echo $currentDir;
-        echo "adaal";
         return 1;
     }
 
