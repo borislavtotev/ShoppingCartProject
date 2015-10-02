@@ -9,8 +9,17 @@ class Router
 
     public static function readAllRoutes()
     {
-        $currentDir = $_SERVER['DOCUMENT_ROOT'];
-        return 1;
+        $filePaths = \SoftUni\Core\Annotations::getDirContents($_SERVER['DOCUMENT_ROOT']);
+        $routeConfigFilePaths = self::getAllRouteConfigFilePaths($filePaths);
+
+        self::$routes = [];
+        foreach ($routeConfigFilePaths as $routeConfigFilePath) {
+            var_dump($routeConfigFilePath);
+            require_once array_pop($routeConfigFilePath);
+            self::$routes[] = $routes;
+        }
+
+        var_dump(self::$routes);
     }
 
     public static function make_uri()
@@ -70,5 +79,43 @@ class Router
         }
 
         return $params;
+    }
+
+    private function getAllRouteConfigFilePaths($filePaths) {
+        $routeConfigFilePaths = [];
+        $routeConfigFilePaths[] = self::getRouteConfigAreasFilePaths($filePaths);
+        $routeConfigFilePaths[] = self::getRouteConfigApplicationFilePaths($filePaths);
+        $routeConfigFilePaths[] = self::getRouteConfigFrameworkFilePaths($filePaths);
+
+        return $routeConfigFilePaths;
+    }
+
+    private function getRouteConfigAreasFilePaths($filePaths) {
+        return array_filter($filePaths, function($filePath) {
+            $pattern = '/Application\\' . DIRECTORY_SEPARATOR . 'Areas\\' . DIRECTORY_SEPARATOR
+                . '(.*?)\\' . DIRECTORY_SEPARATOR. 'Config\\' . DIRECTORY_SEPARATOR . 'RouteConfig.php/';
+            if (preg_match($pattern, $filePath, $match)) {
+                return $filePath;
+            }
+        });
+    }
+
+    private function getRouteConfigApplicationFilePaths($filePaths) {
+        return array_filter($filePaths, function($filePath) {
+            $pattern = '/Application\\' . DIRECTORY_SEPARATOR . 'Config\\' . DIRECTORY_SEPARATOR . 'RouteConfig.php/';
+            if (preg_match($pattern, $filePath, $match)) {
+                return $filePath;
+            }
+        });
+    }
+
+    private function getRouteConfigFrameworkFilePaths($filePaths) {
+        return array_filter($filePaths, function($filePath) {
+            $pattern = '/Framework\\' . DIRECTORY_SEPARATOR . 'Config\\' . DIRECTORY_SEPARATOR
+                . 'RouteConfig.php/';
+            if (preg_match($pattern, $filePath, $match)) {
+                return $filePath;
+            }
+        });
     }
 }
