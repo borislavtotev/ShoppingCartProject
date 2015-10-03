@@ -15,8 +15,27 @@ class Router
         self::$routes = [];
         foreach ($routeConfigFilePaths as $routeConfigFilePath) {
             var_dump($routeConfigFilePath);
-            require_once array_pop($routeConfigFilePath);
-            self::$routes[] = $routes;
+            $routePath = array_pop($routeConfigFilePath);
+            var_dump($routePath);
+            require_once $routePath;
+            if (preg_match('/Areas(.*?)Config/i', $routePath, $match)) {
+                $area = str_replace('\\','',$match[1]);
+                $area = str_replace('/','',$area);
+                var_dump($area);
+                self::$routes[] = array('Area' => array($area, $routes));
+            };
+
+            if (preg_match('#(Application)[\\\/]Config#i', $routePath, $match)) {
+                $area = $match[1];
+                var_dump($area);
+                self::$routes[] = array('Application' => array($area, $routes));
+            };
+
+            if (preg_match('#(Framework)[\\\/]Config#i', $routePath, $match)) {
+                $area = $match[1];
+                var_dump($area);
+                self::$routes[] = array('Framework' => array($area, $routes));
+            };
         }
 
         var_dump(self::$routes);
