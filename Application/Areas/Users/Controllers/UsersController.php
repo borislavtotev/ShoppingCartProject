@@ -3,7 +3,6 @@ namespace SoftUni\Application\Areas\Users\Controllers;
 
 include_once('..' . DIRECTORY_SEPARATOR . 'Framework' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Controller.php');
 
-//use SoftUni\Application\Areas\Users\ViewModel\User;
 use SoftUni\Application\Areas\Users\Models\User;
 use SoftUni\Application\Areas\Users\ViewModel\UserViewModel;
 use SoftUni\View;
@@ -13,12 +12,14 @@ use SoftUni\Application\Areas\Users\ViewModel\RegisterInformation;
 
 /**
  * @Route("user")
+ * @User
  */
 class UsersController extends Controller
 {
     /**
-     * @Route(login)
-     * @POST
+     * @Editor
+     * @Route("loginaaqaa")
+     * @DELETE
      */
     public function login()
     {
@@ -40,9 +41,9 @@ class UsersController extends Controller
     }
 
     /**
-     * @Authorize
      * @Route("register")
      * @POST
+     * @afafasfa
      */
     public function register()
     {
@@ -67,7 +68,8 @@ class UsersController extends Controller
     }
 
     /**
-     * @Route("Profile")
+     * @User
+     * @Route("profile")
      * @GET
      */
     public function profile()
