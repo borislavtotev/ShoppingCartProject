@@ -10,6 +10,8 @@ namespace SoftUni\Core;
 
 class Annotations
 {
+    public static $allAnnotations;
+
     /**
      * Returns array with annotations for controllers in Areas part of the project
      * Each array for controller contains classAnnotations and methodAnnotations
@@ -28,7 +30,6 @@ class Annotations
 
                 $area = $match[1];
                 $className = $match[2];
-                var_dump($className);
                 $fileName = $className.'.php';
                 require_once '..'.DIRECTORY_SEPARATOR.'Application'.DIRECTORY_SEPARATOR.'Areas'
                     .DIRECTORY_SEPARATOR.$area.DIRECTORY_SEPARATOR.'Controllers'.DIRECTORY_SEPARATOR.$fileName;
@@ -39,21 +40,14 @@ class Annotations
                     $classAccessAnnotation = '';
                     $reflectionClass = new \ReflectionClass('SoftUni\\Application\\Areas\\'.$area.'\\Controllers\\'.$className);
                     $doc = $reflectionClass->getDocComment();
-                    var_dump($doc);
                     if (preg_match_all('#@(.*?)\n#s', $doc, $newAnnotations)) {
                         foreach ($newAnnotations[1] as $newAnnotation) {
-                            echo "new annotation";
-                            var_dump($newAnnotation);
                             if (preg_match('/Route\((.*?)\)/', $newAnnotation, $matches)) {
-                                //var_dump($matches);
                                 $classRouteAnnotation = $matches[1];
                             }
 
                             $userRoles = UserRoles::getAllRoles();
                             $pattern = join("|", $userRoles);
-                            var_dump($pattern);
-                            echo "taaaaaaaa classs";
-                            var_dump($newAnnotation);
                             if (preg_match('/'.$pattern.'/', $newAnnotation, $matches)) {
                                 $classAccessAnnotation = $matches[0];
                             }
@@ -66,26 +60,17 @@ class Annotations
                         $methodDoc = $method->getDocComment();
                         if (preg_match_all('#@(.*?)\n#s', $methodDoc, $newMethodAnnotations)) {
                             foreach ($newMethodAnnotations[1] as $newMethodAnnotation) {
-                                echo "method annotations";
-                                var_dump($newMethodAnnotations[1]);
-
                                 // Get Route Annotation
                                 if (preg_match('/Route\((.*?)\)/', $newMethodAnnotation, $matches1)) {
-                                    echo "matches";
-                                    var_dump($matches1[1]);
                                     $fullRouteAnnotation = $classRouteAnnotation.'/'.$matches1[1];
                                     $fullRouteAnnotation = str_replace('"', '', $fullRouteAnnotation);
                                     $fullRouteAnnotation = str_replace("'", "", $fullRouteAnnotation);
-                                    var_dump($fullRouteAnnotation);
-                                    $annotations['Routes'][] = array($fullRouteAnnotation => [$className, $methodName]);
+                                    $annotations['Routes'][$fullRouteAnnotation] = [$className, $methodName];
                                 }
 
                                 // Get Authorization Annotation
                                 $userRoles = UserRoles::getAllRoles();
                                 $pattern = join("|", $userRoles);
-                                var_dump($pattern);
-                                echo "taaaaaaaa";
-                                var_dump($newMethodAnnotation);
                                 if (preg_match('/'.$pattern.'/', $newMethodAnnotation, $matches)) {
                                     if (UserRoles::getRoleNumber($classAccessAnnotation) > $matches[0]) {
                                         $methodAccessAnnotation = $classAccessAnnotation;
@@ -98,7 +83,6 @@ class Annotations
 
                                 // Get HTTP Request Annotation
                                 $pattern = "/GET|POST|PUT|DELETE/";
-                                var_dump($pattern);
                                 if (preg_match($pattern, $newMethodAnnotation, $matches2)) {
                                     $annotations[$className][$methodName][] = array('HttpRequest' => $matches2[0]);
                                 }
@@ -109,6 +93,8 @@ class Annotations
             }
             echo(json_encode($annotations, JSON_PRETTY_PRINT));
         }
+
+        self::$allAnnotations = $annotations;
     }
 
     public static function getDirContents($dir, &$results = array()){

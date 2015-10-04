@@ -17,8 +17,4 @@
  *    "newUser/CreateProfile/FromFacebook"
  * */
 
-$routes = array(
-    array(
-        'regex' => '/^new(?<controller>.*?)\/(?<action>.*?)\/(?<params>.*)$/i',
-    ),
-);
+$routes = array('/^users\/(?<controller>.*?)\/(?<action>.*?)\/(?<params>.*)$/i');

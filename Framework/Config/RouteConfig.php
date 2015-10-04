@@ -1,2 +1,2 @@
 <?php
-$routes = array('regex' => '/^(?<controller>.*?)\/(?<action>.*?)\/(?<params>.*)$/i');
+$routes = array('/^(?<controller>.*?)\/(?<action>.*?)\/(?<params>.*)$/i');

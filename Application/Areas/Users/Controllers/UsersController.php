@@ -18,7 +18,7 @@ class UsersController extends Controller
 {
     /**
      * @Editor
-     * @Route("loginaaqaa")
+     * @Route("loginaaqaa/{id:integer}/{name:string}")
      * @DELETE
      */
     public function login()

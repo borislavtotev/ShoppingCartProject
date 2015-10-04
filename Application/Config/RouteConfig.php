@@ -8,18 +8,10 @@ namespace SoftUni\Config;
  * Example:
  * To match the creation of a new product/user/promotion, you can use this route
  *
- * $routes = array(
-    array(
-        'regex' => '/^new(?<controller>.*?)\/(?<action>.*?)\/(?<params>.*)$/i',
-    )
- *  );
+ * $routes = array('/^new(?<controller>.*?)\/(?<action>.*?)\/(?<params>.*)$/i');
  *
  * matched uri will be:
  *    "newProduct/Create/Cake/With3Eggs"
  *    "newUser/CreateProfile/FromFacebook"
  * */
-$routes = array(
-    array(
-        'regex' => '/^new(?<controller>.*?)\/(?<action>.*?)\/(?<params>.*)$/i',
-    ),
-);
+$routes = array('/^new(?<controller>.*?)\/(?<action>.*?)\/(?<params>.*)$/i');

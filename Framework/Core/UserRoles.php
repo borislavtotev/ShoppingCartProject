@@ -23,7 +23,6 @@ class UserRoles
     public static function getRoleNumber($roleName) {
         if (self::checkUserRoleFile()) {
                 $roles = unserialize(ROLES);
-                var_dump($roles);
                 return $roles[$roleName];
         }
 
@@ -34,7 +33,6 @@ class UserRoles
         $filePath = '..'.DIRECTORY_SEPARATOR.'Application'.DIRECTORY_SEPARATOR.'Config'
             .DIRECTORY_SEPARATOR.'UserRolesConfig.php';
 
-        var_dump($filePath);
         if (file_exists($filePath)) {
             require_once $filePath;
 
