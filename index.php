@@ -2,9 +2,9 @@
 
 session_start();
 
-include_once('..' . DIRECTORY_SEPARATOR . 'Framework' . DIRECTORY_SEPARATOR . 'Autoloader.php');
-include_once('..' . DIRECTORY_SEPARATOR . 'Framework' . DIRECTORY_SEPARATOR . 'Application.php');
-include_once('..' . DIRECTORY_SEPARATOR . 'Framework' . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Annotations.php');
+include_once('Framework' . DIRECTORY_SEPARATOR . 'Autoloader.php');
+include_once('Framework' . DIRECTORY_SEPARATOR . 'Application.php');
+include_once('Framework' . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Annotations.php');
 
 \SoftUni\Autoloader::init();
 \SoftUni\Core\Annotations::getAnnotations();

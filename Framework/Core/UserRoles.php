@@ -30,7 +30,7 @@ class UserRoles
     }
 
     private function checkUserRoleFile() {
-        $filePath = '..'.DIRECTORY_SEPARATOR.'Application'.DIRECTORY_SEPARATOR.'Config'
+        $filePath = 'Application'.DIRECTORY_SEPARATOR.'Config'
             .DIRECTORY_SEPARATOR.'UserRolesConfig.php';
 
         if (file_exists($filePath)) {

@@ -31,7 +31,7 @@ class Annotations
                 $area = $match[1];
                 $className = $match[2];
                 $fileName = $className.'.php';
-                require_once '..'.DIRECTORY_SEPARATOR.'Application'.DIRECTORY_SEPARATOR.'Areas'
+                require_once 'Application'.DIRECTORY_SEPARATOR.'Areas'
                     .DIRECTORY_SEPARATOR.$area.DIRECTORY_SEPARATOR.'Controllers'.DIRECTORY_SEPARATOR.$fileName;
 
                 if (class_exists('SoftUni\\Application\\Areas\\'.$area.'\\Controllers\\'.$className)) {
@@ -91,7 +91,7 @@ class Annotations
                     }
                 }
             }
-            echo(json_encode($annotations, JSON_PRETTY_PRINT));
+            //echo(json_encode($annotations, JSON_PRETTY_PRINT));
         }
 
         self::$allAnnotations = $annotations;

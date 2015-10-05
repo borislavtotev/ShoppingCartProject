@@ -14,9 +14,9 @@ class Router
 
         self::$routes = [];
         foreach ($routeConfigFilePaths as $routeConfigFilePath) {
-            var_dump($routeConfigFilePath);
+            //var_dump($routeConfigFilePath);
             $routePath = array_pop($routeConfigFilePath);
-            var_dump($routePath);
+            //var_dump($routePath);
             require_once $routePath;
             if (preg_match('/Areas(.*?)Config/i', $routePath, $match)) {
                 $area = str_replace('\\','',$match[1]);
@@ -34,7 +34,6 @@ class Router
         }
 
         $routesFromAnnotations = \SoftUni\Core\Annotations::$allAnnotations['Routes'];
-        var_dump($routesFromAnnotations);
         self::$routes['Annotations'] = $routesFromAnnotations;
     }
 
@@ -55,7 +54,6 @@ class Router
             }
         }
 
-        return "users/usersController/login/getLast10byId";
         return parse_url(trim(self::$uri, '/'), PHP_URL_PATH);
     }
 
@@ -67,11 +65,6 @@ class Router
             throw new \Exception("Routes must not be empty", E_USER_ERROR);
         }
 
-        $params = array();
-
-        print_r(self::$routes);
-        echo "<br/>";
-
         $findRoute = self::checkAnnotationRoutes();
 
         if (is_null($findRoute)) {
@@ -82,30 +75,7 @@ class Router
             $findRoute = self::checkApplicationOrFrameworkRoutes("Framework");
         }
 
-        foreach (self::$routes as $route)
-        {
-            //we keep our route uri in the [0] position
-            print_r($route);
-            $route_uri = array_shift($route);
-
-            echo "route uri";
-            var_dump($route_uri);
-            var_dump($uri);
-            if (!preg_match($route_uri, $uri, $match))
-            {
-                continue;
-            }
-            else
-            {
-                $params['controller'] = $match['controller'];
-                $params['action'] = $match['action'];
-                $params['params'] = $match['params'];
-
-                break;
-            }
-        }
-
-        return $params;
+        return $findRoute;
     }
 
     private function getAllRouteConfigFilePaths($filePaths) {
@@ -188,13 +158,13 @@ class Router
     private function checkAnnotationRoutes() {
         $annotationRoutes = self::$routes['Annotations'];
         $uriParams = [];
-        var_dump($annotationRoutes);
+        //var_dump($annotationRoutes);
         foreach ($annotationRoutes as $route => $properties) {
             $controller = $properties[0];
             $action = $properties[1];
 
             // set proper regex for variables
-            if (preg_match_all('/{(.*?):?(integer|string|double)}/', $route, $match)) {
+            if (preg_match_all('#{(.*?):?(integer|string|double)}#', $route, $match)) {
                 for ($i = 0; $i < count($match[0]); $i++) {
                     $parameter = $match[1][$i];
                     $variableType = $match[2][$i];
@@ -214,7 +184,6 @@ class Router
                     }
 
                     $route = str_replace($match[0][$i], $regex, $route);
-                    var_dump($route);
                 }
             }
 
@@ -232,10 +201,10 @@ class Router
                     $uriParams['params'][$key] = $match[$key];
                 }
 
-                var_dump($uriParams);
+                //var_dump($uriParams);
+                break;
             }
         }
-
         return $uriParams;
     }
 }

@@ -23,8 +23,8 @@ class Autoloader
             });
 
             // require the file if it is found
-            $firstMatchedFile =array_pop($classFile);
-            if ($firstMatchedFile !== '') {
+            $firstMatchedFile = array_pop($classFile);
+            if (isset($firstMatchedFile)) {
                 require_once $firstMatchedFile;
             }
         });

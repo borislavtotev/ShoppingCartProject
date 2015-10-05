@@ -5,6 +5,7 @@ class View
 {
     public static $controllerName;
     public static $actionName;
+    public static $area;
 
     const PARAMS_COUNT_MODEL_AND_VIEW = 2;
     const PARAMS_COUNT_MODEL_ONLY = 1;
@@ -15,6 +16,7 @@ class View
     public function __construct()
     {
         $params = func_get_args();
+        //var_dump($params);
 
         if (count($params) == self::PARAMS_COUNT_MODEL_AND_VIEW) {
             $view = $params[0];
@@ -30,9 +32,13 @@ class View
 
     private function initModelOnly($model)
     {
-        require self::VIEW_FOLDER
+        require 'Application'
                 . DIRECTORY_SEPARATOR
-                . self::$controllerName
+                . 'Areas'
+                . DIRECTORY_SEPARATOR
+                . self::$area
+                . DIRECTORY_SEPARATOR
+                . 'Views'
                 . DIRECTORY_SEPARATOR
                 . self::$actionName
                 . self::VIEW_EXTENSION;
@@ -40,7 +46,13 @@ class View
 
     private function initModelView($view, $model)
     {
-        require self::VIEW_FOLDER
+        require 'Application'
+                . DIRECTORY_SEPARATOR
+                . 'Areas'
+                . DIRECTORY_SEPARATOR
+                . self::$area
+                . DIRECTORY_SEPARATOR
+                . 'Views'
                 . DIRECTORY_SEPARATOR
                 . $view
                 . self::VIEW_EXTENSION;

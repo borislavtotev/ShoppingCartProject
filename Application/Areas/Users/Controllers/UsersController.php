@@ -1,14 +1,14 @@
 <?php
 namespace SoftUni\Application\Areas\Users\Controllers;
 
-include_once('..' . DIRECTORY_SEPARATOR . 'Framework' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Controller.php');
+include_once('Framework' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Controller.php');
 
 use SoftUni\Application\Areas\Users\Models\User;
-use SoftUni\Application\Areas\Users\ViewModel\UserViewModel;
+use SoftUni\Application\Areas\Users\ViewModels\UserViewModel;
 use SoftUni\View;
 use SoftUni\Controllers\Controller;
-use SoftUni\Application\Areas\Users\ViewModel\LoginInformation;
-use SoftUni\Application\Areas\Users\ViewModel\RegisterInformation;
+use SoftUni\Application\Areas\Users\ViewModels\LoginInformation;
+use SoftUni\Application\Areas\Users\ViewModels\RegisterInformation;
 
 /**
  * @Route("user")
@@ -18,7 +18,7 @@ class UsersController extends Controller
 {
     /**
      * @Editor
-     * @Route("loginaaqaa/{id:integer}/{name:string}")
+     * @Route("login/{id:integer}/{name:string}")
      * @DELETE
      */
     public function login()

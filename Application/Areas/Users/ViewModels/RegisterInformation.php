@@ -1,6 +1,6 @@
 <?php
 
-namespace SoftUni\Application\Areas\Users\ViewModel;
+namespace SoftUni\Application\Areas\Users\ViewModels;
 
 class RegisterInformation
 {
